@@ -10,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'ioc-angular-flins-guillemtapia';
+
+  constructor() {
+    console.log('FLINS / APP - Aplicació inicialitzada correctament.');
+  }
 }

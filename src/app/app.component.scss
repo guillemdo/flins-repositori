@@ -1,0 +1,27 @@
+/* estil primera aproximació a pagina inici FLINS /APP */
+
+/* el selector body dins de l’SCSS del component no s’aplica globalment en Angular.
+S'ha de canviar a :host perquè el fons del component es vegi.*/
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+  font-family: 'Lucida Console', sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #5c224b;
+  font-size: 36px;
+  margin-left: 200px;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #335716;
+  font-size: 18px;
+  margin-left: 220px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
