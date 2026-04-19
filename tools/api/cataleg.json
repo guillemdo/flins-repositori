@@ -1,0 +1,59 @@
+{
+  "elements": [
+    {
+      "id": "flin-001",
+      "nom": "Sleepless in Seattle",
+      "descripcio": "Una clàssica sobre el destí",
+      "categoria": "comèdia",
+      "valoracio": 3.1,
+      "preu": 4.99,
+      "imatge": "/sleeplessinseattle.jpg",
+      "popular": false,
+      "stock": 5
+    },
+    {
+      "id": "flin-002",
+      "nom": "While You Were Sleeping",
+      "descripcio": "Confusió a Chicago",
+      "categoria": "malentesos",
+      "valoracio": 2.8,
+      "preu": 3.50,
+      "imatge": "/whileyouweresleeping.jpg",
+      "popular": false,
+      "stock": 12
+    },
+    {
+      "id": "flin-003",
+      "nom": "Notting Hill",
+      "descripcio": "La vida a Londres",
+      "categoria": "mons diferents",
+      "valoracio": 4.2,
+      "preu": 5.75,
+      "imatge": "/nottinghill.jpg",
+      "popular": true,
+      "stock": 10
+    },
+    {
+      "id": "flin-004",
+      "nom": "Breakfast at Tiffany's",
+      "descripcio": "Amor a Nova York",
+      "categoria": "drama",
+      "valoracio": 4.7,
+      "preu": 15,
+      "imatge": "/breakfasttiffanys.jpg",
+      "popular": true,
+      "stock": 3
+    },
+    {
+      "id": "flin-005",
+      "nom": "Dirty Dancing",
+      "descripcio": "Dansa a l'estiu",
+      "categoria": "musical",
+      "valoracio": 3.9,
+      "preu": 3.25,
+      "imatge": "/dirtydancing.jpg",
+      "popular": true,
+      "stock": 5
+    }
+  ]
+}

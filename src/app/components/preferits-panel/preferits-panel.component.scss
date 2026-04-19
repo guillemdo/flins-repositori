@@ -1,0 +1,198 @@
+.preferits-panel {
+  background-color: transparent;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+
+  h2 {
+    margin: 0 0 1rem;
+    color: #333;
+  }
+}
+
+.llista-preferits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  .preferit-item {
+    display: block;
+    padding: 1rem;
+    border: 2px solid #eee;
+    border-radius: 4px;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: #3498db;
+      background-color: #c1daf1;
+    }
+
+    &.seleccionat {
+      border-color: #3498db;
+      background-color: #e3f2fd;
+    }
+
+    .preferit-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .preferit-info {
+      flex: 1;
+
+      h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.1rem;
+        color: #333;
+      }
+
+      .notes-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .notes-count {
+          margin: 0;
+          font-size: 0.9rem;
+          color: #3498db;
+          font-weight: 600;
+          line-height: 1.35;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .btn-nova-nota {
+          background-color: #27ae60;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          line-height: 1.35;
+          padding: 0.2rem 0.6rem;
+          cursor: pointer;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #229954;
+          }
+        }
+      }
+    }
+
+    .btn-eliminar {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    .notes-inline {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #c7dff4;
+
+      .notes-llista {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+
+        .nota-item {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+
+          .input-nota {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+
+            &:focus {
+              outline: none;
+              border-color: #3498db;
+            }
+
+            &[readonly] {
+              background-color: #f8fbfe;
+              color: #5f6f7f;
+            }
+
+            &.invalid {
+              border-color: #e74c3c;
+            }
+          }
+
+          .btn-eliminar-nota {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            min-width: 32px;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #c0392b;
+            }
+          }
+        }
+      }
+
+      .btn-afegir-nota {
+        width: 100%;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover:not(:disabled) {
+          background-color: #229954;
+        }
+
+        &:disabled {
+          background-color: #bdc3c7;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+.sense-preferits {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  .ajuda {
+    font-size: 0.9rem;
+    color: #999;
+  }
+}

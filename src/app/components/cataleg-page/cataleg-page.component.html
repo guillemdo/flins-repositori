@@ -1,0 +1,53 @@
+<div class="cataleg-page">
+  <header class="page-header">
+    <h1>Catàleg de Flins</h1>
+    <p class="subtitle">Unitat 3. Serveis i gestió de dades</p>
+  </header>
+
+  <app-formulari-cerca />
+
+  <div class="estat-carregant" *ngIf="elementService.estat() === 'carregant'">
+    <div class="spinner"></div>
+    <p>Carregant elements...</p>
+  </div>
+
+  <div class="estat-error" *ngIf="elementService.estat() === 'error'">
+    <div class="error-icon">⚠️</div>
+    <h2>Error al carregar elements</h2>
+    <p class="error-missatge">{{ elementService.error() }}</p>
+    <button class="btn-reintentar" (click)="reintentar()">
+      Reintentar
+    </button>
+  </div>
+
+  <div class="estat-exit" *ngIf="elementService.estat() === 'exit'">
+    <div class="sense-resultats" *ngIf="elementService.elements().length === 0">
+      <p>No s'han trobat elements</p>
+    </div>
+
+    <div class="elements-grid" *ngIf="elementService.elements().length > 0">
+      <div class="element-card" *ngFor="let element of elementService.elements()">
+        <img [src]="element.imatge" [alt]="element.nom" class="element-imatge">
+        <button class="btn-preferit" [class.actiu]="preferitsService.esPreferit(element.id)" (click)="togglePreferit(element)">{{ preferitsService.esPreferit(element.id) ? '★' : '☆' }}</button>
+        <div class="element-info">
+          <h3 class="element-nom">{{ element.nom }}</h3>
+          <p class="element-categoria">{{ element.categoria }}</p>
+          <div class="descripcio-fila">
+            <p class="element-descripcio">{{ element.descripcio }}</p>
+            <p class="element-valoracio" *ngIf="element.valoracio !== undefined && element.valoracio !== null">
+              <span class="valoracio-icona">★</span>
+              {{ element.valoracio | number:'1.1-1' }}
+              <span class="valoracio-max">/ 5</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="estat-inicial" *ngIf="elementService.estat() === 'inicial'">
+    <p>Inicialitzant...</p>
+  </div>
+
+  <app-preferits-panel />
+</div>

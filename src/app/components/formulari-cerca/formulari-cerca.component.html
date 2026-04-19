@@ -1,0 +1,19 @@
+<div class="formulari-cerca">
+  <form [formGroup]="formulariCerca" (ngSubmit)="cercar()">
+    <div class="camp-cerca">
+      <div class="input-wrapper">
+        <input type="text" formControlName="termeCerca" placeholder="Cerca elements per nom..." class="input-cerca" [class.invalid]="termeInvalid">
+        <div class="indicadors">
+          <span class="validant-text" *ngIf="termeValidant">Validant...</span>
+          <span class="spinner-petit" *ngIf="estaCarregant || termeValidant"></span>
+          <button type="button" class="btn-netejar" (click)="netejar()" *ngIf="formulariCerca.get('termeCerca')?.value">✕</button>
+        </div>
+      </div>
+      <button type="submit" class="btn-cercar" [disabled]="formulariCerca.invalid || estaCarregant || termeValidant">Cercar</button>
+    </div>
+    <div class="missatge-error" *ngIf="termeInvalid">{{ missatgeError }}</div>
+    <div class="accions">
+      <button type="button" class="btn-toggle-llistat" (click)="toggleLlistat()" [disabled]="estaCarregant || termeValidant">{{ textBotoLlistat }}</button>
+    </div>
+  </form>
+</div>

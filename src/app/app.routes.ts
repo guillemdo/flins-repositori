@@ -1,3 +1,10 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { CatalegPageComponent } from './components/cataleg-page/cataleg-page.component';
+
+export const routes: Routes = [
+	{
+		path: '',
+		component: CatalegPageComponent
+	}
+];

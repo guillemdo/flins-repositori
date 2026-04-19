@@ -1,0 +1,37 @@
+<div class="preferits-panel">
+  <h2>Els meus preferits ({{ preferitsService.totalPreferits() }})</h2>
+
+  <!-- Llista de preferits -->
+  <div class="llista-preferits" *ngIf="preferitsService.totalPreferits() > 0">
+    <div class="preferit-item" *ngFor="let preferit of preferitsService.preferitsDetall()" [class.seleccionat]="preferitObert === preferit.elementId">
+      <div class="preferit-main">
+        <div class="preferit-info">
+          <h3>{{ preferit.elementNom }}</h3>
+          <div class="notes-row">
+            <p class="notes-count" (click)="alternarPanelNotes(preferit, $event)">{{ preferit.notes.length }} Notes</p>
+            <button type="button" class="btn-nova-nota" (click)="obrirEditorNotes(preferit, $event)">+</button>
+          </div>
+        </div>
+        <button class="btn-eliminar" (click)="eliminarPreferit(preferit.elementId)">🗑️</button>
+      </div>
+      <div class="notes-inline" *ngIf="preferitObert === preferit.elementId && obtenirFormulari(preferit.elementId)">
+        <form [formGroup]="obtenirFormulari(preferit.elementId)">
+          <div class="notes-llista" formArrayName="notes">
+            <div class="nota-item" *ngFor="let notaControl of obtenirNotes(preferit.elementId).controls; let i = index">
+              <input type="text" [formControlName]="i" [placeholder]="i === indexNotaNova[preferit.elementId] ? 'Escriu una nova nota...' : 'Nota ' + (i + 1)" class="input-nota" [class.invalid]="notaControl.invalid && notaControl.touched" [readonly]="i !== indexNotaNova[preferit.elementId]">
+              <button type="button" class="btn-eliminar-nota" (click)="eliminarNota(preferit.elementId, i)">✕</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-afegir-nota" (click)="afegirNota(preferit.elementId)" [disabled]="!teNotaNovaValida(preferit.elementId)">Afegir nota</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Missatge si no hi ha preferits -->
+  <div class="sense-preferits" *ngIf="preferitsService.totalPreferits() === 0">
+    <p>No tens preferits encara</p>
+    <p class="ajuda">Fes clic a l'estrella d'un element per afegir-lo als preferits</p>
+  </div>
+</div>
