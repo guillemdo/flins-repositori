@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PreferitsService, Preferit } from '../../serveis/preferits.service';
+import { NotesService } from '../../serveis/notes.service';
 
 @Component({
   selector: 'app-preferits-panel',
@@ -17,29 +19,32 @@ export class PreferitsPanelComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public preferitsService: PreferitsService
+    private router: Router,
+    public preferitsService: PreferitsService,
+    public notesService: NotesService
   ) {}
 
   ngOnInit(): void {
     this.preferitsService.preferitsDetall().forEach((preferit) => {
-      this.inicialitzarFormulari(preferit);
+      this.inicialitzarFormulari(preferit.elementId);
     });
   }
 
-  private inicialitzarFormulari(preferit: Preferit): void {
-    this.formularisNotes[preferit.elementId] = this.fb.group({
+  private inicialitzarFormulari(elementId: string): void {
+    const notes = this.notesService.obtenirNotes(elementId);
+    this.formularisNotes[elementId] = this.fb.group({
       notes: this.fb.array(
-        preferit.notes.map((nota) =>
+        notes.map((nota) =>
           this.fb.control(nota, [Validators.required, Validators.minLength(3)])
         )
       )
     });
-    this.indexNotaNova[preferit.elementId] = null;
+    this.indexNotaNova[elementId] = null;
   }
 
-  private assegurarFormulari(preferit: Preferit): void {
-    if (!this.formularisNotes[preferit.elementId]) {
-      this.inicialitzarFormulari(preferit);
+  private assegurarFormulari(elementId: string): void {
+    if (!this.formularisNotes[elementId]) {
+      this.inicialitzarFormulari(elementId);
     }
   }
 
@@ -53,13 +58,17 @@ export class PreferitsPanelComponent implements OnInit {
 
   alternarPanelNotes(preferit: Preferit, event: Event): void {
     event.stopPropagation();
-    this.assegurarFormulari(preferit);
+    this.assegurarFormulari(preferit.elementId);
     this.preferitObert = this.preferitObert === preferit.elementId ? null : preferit.elementId;
+  }
+
+  anarADetall(elementId: string): void {
+    this.router.navigate(['/detall', elementId]);
   }
 
   obrirEditorNotes(preferit: Preferit, event: Event): void {
     event.stopPropagation();
-    this.assegurarFormulari(preferit);
+    this.assegurarFormulari(preferit.elementId);
     if (this.preferitObert !== preferit.elementId) {
       this.preferitObert = preferit.elementId;
     }
@@ -95,13 +104,9 @@ export class PreferitsPanelComponent implements OnInit {
 
     if (control.valid) {
       const nota = String(control.value ?? '').trim();
-      this.preferitsService.afegirNota(elementId, nota);
+      this.notesService.afegirNota(elementId, nota);
       this.indexNotaNova[elementId] = null;
-
-      const preferitActualitzat = this.preferitsService.obtenirPreferit(elementId);
-      if (preferitActualitzat) {
-        this.inicialitzarFormulari(preferitActualitzat);
-      }
+      this.inicialitzarFormulari(elementId);
     }
   }
 
@@ -118,28 +123,17 @@ export class PreferitsPanelComponent implements OnInit {
       this.indexNotaNova[elementId] = indexNova - 1;
     }
 
-    this.preferitsService.eliminarNota(elementId, index);
+    const novaNotaValor = (indexNova !== null && indexNova !== undefined)
+      ? String(this.obtenirNotes(elementId).at(indexNova)?.value ?? '')
+      : null;
 
-    const preferitActualitzat = this.preferitsService.obtenirPreferit(elementId);
-    if (preferitActualitzat) {
-      const indexNovaActual = this.indexNotaNova[elementId];
-      const novaNotaValor = (indexNovaActual !== null && indexNovaActual !== undefined)
-        ? String(this.obtenirNotes(elementId).at(indexNovaActual)?.value ?? '')
-        : null;
+    this.notesService.eliminarNota(elementId, index);
+    this.inicialitzarFormulari(elementId);
 
-      this.inicialitzarFormulari(preferitActualitzat);
-
-      if (novaNotaValor !== null) {
-        const notesRebuild = this.obtenirNotes(elementId);
-        notesRebuild.push(this.fb.control(novaNotaValor, [Validators.required, Validators.minLength(3)]));
-        this.indexNotaNova[elementId] = notesRebuild.length - 1;
-      }
-    } else {
-      delete this.formularisNotes[elementId];
-      delete this.indexNotaNova[elementId];
-      if (this.preferitObert === elementId) {
-        this.preferitObert = null;
-      }
+    if (novaNotaValor !== null) {
+      const notesRebuild = this.obtenirNotes(elementId);
+      notesRebuild.push(this.fb.control(novaNotaValor, [Validators.required, Validators.minLength(3)]));
+      this.indexNotaNova[elementId] = notesRebuild.length - 1;
     }
   }
 

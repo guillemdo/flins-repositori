@@ -1,10 +1,8 @@
 <div class="cataleg-page">
   <header class="page-header">
     <h1>Catàleg de Flins</h1>
-    <p class="subtitle">Unitat 3. Serveis i gestió de dades</p>
+    <p class="subtitle">Unitat 4. Navegació</p>
   </header>
-
-  <app-formulari-cerca />
 
   <div class="estat-carregant" *ngIf="elementService.estat() === 'carregant'">
     <div class="spinner"></div>
@@ -25,29 +23,29 @@
       <p>No s'han trobat elements</p>
     </div>
 
-    <div class="elements-grid" *ngIf="elementService.elements().length > 0">
-      <div class="element-card" *ngFor="let element of elementService.elements()">
-        <img [src]="element.imatge" [alt]="element.nom" class="element-imatge">
-        <button class="btn-preferit" [class.actiu]="preferitsService.esPreferit(element.id)" (click)="togglePreferit(element)">{{ preferitsService.esPreferit(element.id) ? '★' : '☆' }}</button>
-        <div class="element-info">
-          <h3 class="element-nom">{{ element.nom }}</h3>
-          <p class="element-categoria">{{ element.categoria }}</p>
-          <div class="descripcio-fila">
-            <p class="element-descripcio">{{ element.descripcio }}</p>
-            <p class="element-valoracio" *ngIf="element.valoracio !== undefined && element.valoracio !== null">
-              <span class="valoracio-icona">★</span>
-              {{ element.valoracio | number:'1.1-1' }}
-              <span class="valoracio-max">/ 5</span>
-            </p>
+    <cdk-virtual-scroll-viewport [itemSize]="itemSize" class="elements-viewport" *ngIf="elementService.elements().length > 0">
+      <div class="fila-elements" *cdkVirtualFor="let fila of filesVirtuals(); trackBy: trackByFila">
+        <div class="element-card" *ngFor="let element of fila; trackBy: trackByElement" (click)="anarADetall(element.id)" role="button" tabindex="0" (keydown.enter)="anarADetall(element.id)" [attr.aria-label]="'Veure detall de ' + element.nom">
+          <img [src]="element.imatge" [alt]="element.nom" class="element-imatge">
+          <button class="btn-preferit" [class.actiu]="preferitsService.esPreferit(element.id)" (click)="togglePreferit($event, element)">{{ preferitsService.esPreferit(element.id) ? '★' : '☆' }}</button>
+          <div class="element-info">
+            <h3 class="element-nom">{{ element.nom }}</h3>
+            <p class="element-categoria">{{ element.categoria }}</p>
+            <div class="descripcio-fila">
+              <p class="element-descripcio">{{ element.descripcio }}</p>
+              <p class="element-valoracio" *ngIf="element.valoracio !== undefined && element.valoracio !== null">
+                <span class="valoracio-icona">★</span>
+                {{ element.valoracio | number:'1.1-1' }}
+                <span class="valoracio-max">/ 5</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </cdk-virtual-scroll-viewport>
   </div>
 
   <div class="estat-inicial" *ngIf="elementService.estat() === 'inicial'">
     <p>Inicialitzant...</p>
   </div>
-
-  <app-preferits-panel />
 </div>

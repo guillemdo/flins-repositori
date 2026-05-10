@@ -41,8 +41,8 @@ export class FormulariCercaComponent implements OnInit {
       )
       .subscribe(terme => {
         if (!terme) {
-          this.vistaActiva = 'totes';
-          this.elementService.obtenirTots();
+          this.vistaActiva = null;
+          this.elementService.reiniciar();
           return;
         }
 
@@ -61,8 +61,8 @@ export class FormulariCercaComponent implements OnInit {
 
   netejar(): void {
     this.formulariCerca.reset({ termeCerca: '' }, { emitEvent: false });
-    this.vistaActiva = 'totes';
-    this.elementService.obtenirTots();
+    this.vistaActiva = null;
+    this.elementService.reiniciar();
   }
 
   mostrarPopulars(): void {

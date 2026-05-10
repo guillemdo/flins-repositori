@@ -5,7 +5,6 @@ export interface Preferit {
   elementId: string;
   elementNom: string;
   element: ElementCataleg;
-  notes: string[];
   dataAfegit: Date;
 }
 
@@ -13,7 +12,6 @@ interface PreferitPersistit {
   elementId: string;
   elementNom: string;
   element?: ElementCataleg;
-  notes?: string[];
   dataAfegit: string | Date;
 }
 
@@ -56,7 +54,6 @@ export class PreferitsService {
           elementId: p.elementId,
           elementNom: p.elementNom,
           element: elementNormalitzat,
-          notes: Array.isArray(p.notes) ? p.notes : [],
           dataAfegit: new Date(p.dataAfegit)
         };
       });
@@ -85,7 +82,6 @@ export class PreferitsService {
       elementId: element.id,
       elementNom: element.nom,
       element,
-      notes: [],
       dataAfegit: new Date()
     };
 
@@ -102,44 +98,6 @@ export class PreferitsService {
 
   esPreferit(id: string): boolean {
     return this.preferitsDetallSignal().some((preferit) => preferit.elementId === id);
-  }
-
-  afegirNota(elementId: string, nota: string): void {
-    this.preferitsDetallSignal.update((preferits) =>
-      preferits.map((preferit) => {
-        if (preferit.elementId === elementId) {
-          return { ...preferit, notes: [...preferit.notes, nota] };
-        }
-        return preferit;
-      })
-    );
-    this.desarPreferits();
-  }
-
-  actualitzarNotes(elementId: string, notes: string[]): void {
-    this.preferitsDetallSignal.update((preferits) =>
-      preferits.map((preferit) => {
-        if (preferit.elementId === elementId) {
-          return { ...preferit, notes };
-        }
-        return preferit;
-      })
-    );
-    this.desarPreferits();
-  }
-
-  eliminarNota(elementId: string, indexNota: number): void {
-    this.preferitsDetallSignal.update((preferits) =>
-      preferits.map((preferit) => {
-        if (preferit.elementId === elementId) {
-          const notesActualitzades = [...preferit.notes];
-          notesActualitzades.splice(indexNota, 1);
-          return { ...preferit, notes: notesActualitzades };
-        }
-        return preferit;
-      })
-    );
-    this.desarPreferits();
   }
 
   obtenirPreferit(elementId: string): Preferit | undefined {

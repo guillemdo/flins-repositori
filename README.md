@@ -1,27 +1,50 @@
-# IocAngularFlinsGuillemtapia
+# IOC Angular Flins
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+## 1. Descripcio del projecte
 
-## Development server
+Aplicacio Angular de cataleg de pellicules (Flins) amb navegacio per rutes, vista de detall, autenticació per accedir a preferits, lazy loading de la seccio protegida i optimitzacions de rendiment amb OnPush i virtualitzacio de llista.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 2. Mapa de rutes
 
-## Code scaffolding
+| Path            | Component                            | Acces              |
+| --------------- | ------------------------------------ | ------------------ |
+| /               | Redireccio a cataleg                 | Public             |
+| /cataleg        | CatalegPageComponent                 | Public             |
+| /cerca          | CercaPageComponent                   | Public             |
+| /detall/:id     | DetallPageComponent                  | Public             |
+| /preferits      | PreferitsPageComponent (lazy loaded) | Privat (authGuard) |
+| /login          | LoginPageComponent                   | Public             |
+| \*\* (wildcard) | Redireccio a cataleg                 | Public             |
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 3. Instruccions d'execució en local
 
-## Build
+git clone [url-repositori]
+cd [nom-projecte]
+npm install
+ng serve
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Obrir http://localhost:4200
 
-## Running unit tests
+## 4. Build de produccio
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Comanda:
+ng build --configuration production
 
-## Running end-to-end tests
+Resultat:
+El build completa correctament i genera els fitxers a la carpeta dist/.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Mida aproximada del bundle obtinguda:
 
-## Further help
+- Initial total: 406.61 kB (Estimated transfer size: 104.95 kB)
+- Chunk inicial principal: chunk-QCXL4CEJ.js 300.60 kB
+- Main: main-OHGS2BI6.js 71.24 kB
+- Polyfills: polyfills-FFHMD2TL.js 34.52 kB
+- Lazy chunk (preferits): chunk-GCJU7VVB.js 13.54 kB
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Nota:
+Durant el build poden apareixer warnings de pressupost d'estils de component, però no hi ha errors de compilació.
+
+## 5. Credencials de prova
+
+Email: Usuari@test.com
+Contrasenya: 1234

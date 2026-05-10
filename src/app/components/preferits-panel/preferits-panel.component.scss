@@ -41,8 +41,26 @@
       gap: 1rem;
     }
 
+    .preferit-esquerra {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .preferit-imatge {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #dbe8f5;
+      flex-shrink: 0;
+    }
+
     .preferit-info {
       flex: 1;
+      min-width: 0;
 
       h3 {
         margin: 0 0 0.5rem;

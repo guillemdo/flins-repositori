@@ -5,11 +5,14 @@
   <div class="llista-preferits" *ngIf="preferitsService.totalPreferits() > 0">
     <div class="preferit-item" *ngFor="let preferit of preferitsService.preferitsDetall()" [class.seleccionat]="preferitObert === preferit.elementId">
       <div class="preferit-main">
-        <div class="preferit-info">
-          <h3>{{ preferit.elementNom }}</h3>
-          <div class="notes-row">
-            <p class="notes-count" (click)="alternarPanelNotes(preferit, $event)">{{ preferit.notes.length }} Notes</p>
-            <button type="button" class="btn-nova-nota" (click)="obrirEditorNotes(preferit, $event)">+</button>
+        <div class="preferit-esquerra">
+          <img class="preferit-imatge" [src]="preferit.element.imatge" [alt]="preferit.elementNom" (click)="anarADetall(preferit.elementId)" style="cursor:pointer">
+          <div class="preferit-info">
+            <h3>{{ preferit.elementNom }}</h3>
+            <div class="notes-row">
+              <p class="notes-count" (click)="alternarPanelNotes(preferit, $event)">{{ notesService.totalNotes(preferit.elementId) }} Notes</p>
+              <button type="button" class="btn-nova-nota" (click)="obrirEditorNotes(preferit, $event)">+</button>
+            </div>
           </div>
         </div>
         <button class="btn-eliminar" (click)="eliminarPreferit(preferit.elementId)">🗑️</button>
